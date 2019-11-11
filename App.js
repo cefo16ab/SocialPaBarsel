@@ -13,6 +13,15 @@ import SignUpForm from './components/SignUpForm';
 import LoginForm from './components/LoginForm';
 import Events from './components/Events';
 import MyEvents from './components/MyEvents';
+import CreateEvent from './components/CreateEvent';
+
+/*
+const MainStackNavigator = createStackNavigator({
+Events: {screen: Events},
+});
+
+const MainAppContainer = createAppContainer(MainStackNavigator)
+*/
 
 
 export default class App extends React.Component {
@@ -73,9 +82,7 @@ export default class App extends React.Component {
     }
     return (
       <ScrollView>
-          <LoginForm />
-          
-          
+          <CreateEvent/>
       </ScrollView>
     );
   };
@@ -91,7 +98,6 @@ export default class App extends React.Component {
     return (
       <View>
         <Text>Current user: {user.email}</Text>
-        
         <Button onPress={this.handleLogOut} title="Log out" />
       </View>
     );
