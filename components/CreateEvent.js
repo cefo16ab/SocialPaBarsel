@@ -120,7 +120,7 @@ export default class createEvent extends React.Component {
       const result = await firebase
         //.auth()
         .database()
-        .ref('/Event/'+ postnr)
+        .ref('/Events/'+ postnr)
         .push({title, time, description, address, postnr, imageUrl });
       console.log(result);
       this.endLoading();

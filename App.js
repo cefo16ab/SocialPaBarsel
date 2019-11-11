@@ -7,6 +7,9 @@ import {
   ScrollView,
   Button,
 } from 'react-native';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
 import Constants from 'expo-constants';
 import firebase from 'firebase';
 import SignUpForm from './components/SignUpForm';
@@ -15,13 +18,47 @@ import Events from './components/Events';
 import MyEvents from './components/MyEvents';
 import CreateEvent from './components/CreateEvent';
 
-/*
-const MainStackNavigator = createStackNavigator({
-Events: {screen: Events},
+
+const MainTabNavigator = createMaterialTopTabNavigator({
+
+  Home: {screen: Events},
+  MyyEvents: {screen: MyEvents},
+},
+{
+ 
+  tabBarPosition: 'top',
+  swipeEnabled: true,
+  animationEnabled: true,
+  
+  tabBarOptions: {
+    activeTintColor: '#FFFFFF',
+    inactiveTintColor: '#F8F8F8',
+    
+    
+    style: {
+      backgroundColor: '#633689',
+      
+    },
+    labelStyle: {
+      textAlign: 'center',
+    },
+    indicatorStyle: {
+      borderBottomColor: '#87B56A',
+      borderBottomWidth: 2,
+        
+    },
+    
+  },
+
 });
 
-const MainAppContainer = createAppContainer(MainStackNavigator)
-*/
+const MainAppContainer = createAppContainer(MainTabNavigator);
+
+const UnauthenticatedNavigator = createStackNavigator({
+  Login: {screen: LoginForm},
+})
+const UnauthenticatedAppContainer = createAppContainer(UnauthenticatedNavigator);
+
 
 
 export default class App extends React.Component {
@@ -63,55 +100,28 @@ export default class App extends React.Component {
   // Unsubscribe funktionen deklareres og er tom til at starte med
   authStateChangeUnsubscribe = null;
 
-  // App komponenten har et user felt i sin state, som er den user som pt. er logget ind. Den er null hvis ingen user er logget ind
-  state = {
-    user: null,
-  };
+ 
 
   handleLogOut = async () => {
     await firebase.auth().signOut();
   };
 
-  // Her renderes login og signup-formularerne
-  renderLoginSignup = () => {
-    const { user } = this.state;
+  
 
-    // Hvis der allerede er en user defineret, vises de ikke
-    if (user) {
-      return null;
-    }
-    return (
-      <ScrollView>
-          <CreateEvent/>
-      </ScrollView>
-    );
-  };
-
-  // Her renderes den aktuelle bruger som er logget ind
-  renderCurrentUser = () => {
-    const { user } = this.state;
-    // Hvis der ikke er en bruger logget ind, vises der ingenting
-    if (!user) {
-      return null;
-    }
-    // Man kan med fordel lave en separat kompomnent til dette, som modtager user som prop  
-    return (
-      <View>
-        <Text>Current user: {user.email}</Text>
-        <Button onPress={this.handleLogOut} title="Log out" />
-      </View>
-    );
+  // App komponenten har et user felt i sin state, som er den user som pt. er logget ind. Den er null hvis ingen user er logget ind
+  state = {
+    user: null,
   };
 
   render() {
-    return (
-      <View style={styles.container}>
-        
-        {this.renderCurrentUser()}
-        {this.renderLoginSignup()}
-       
-      </View>
-    );
+    
+    const {user} = this.state;
+    if(user){
+      return<MainAppContainer/>;
+    
+    } else{
+      return <UnauthenticatedAppContainer/>;
+    }
   }
 }
 
