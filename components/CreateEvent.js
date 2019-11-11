@@ -102,8 +102,9 @@ export default class createEvent extends React.Component {
   uploadImage = async(uri) => {
     const response = await fetch(uri);
     const blob = await response.blob();
-    var ref = firebase.storage().ref().child("Event-image");
-    return ref.put(blob);
+    var ref = firebase.storage().ref().child("Event-image"); 
+    await ref.put(blob);
+    return await ref.getDownloadURL()
   }
   handleSubmit = async () => {
     // Læser værdier fra state
@@ -111,8 +112,8 @@ export default class createEvent extends React.Component {
     try {
       this.startLoading();
       this.clearError();
-      const uploadResult=  await uploadImage (this.image)
-     console.log(uploadResult);
+      const imageUrl=  await this.uploadImage (image)
+    //  console.log(uploadResult);
 
 
       // Her kalder vi den rette funktion fra firebase auth
@@ -126,6 +127,7 @@ export default class createEvent extends React.Component {
       this.setState({ isCompleted: true });
     } catch (error) {
       // Vi sender `message` feltet fra den error der modtages, videre. 
+      console.error(error);
       this.setError(error.message);
       this.endLoading();
     }
