@@ -10,6 +10,7 @@ import {
   Image,
 } from 'react-native';
 import firebase from 'firebase';
+import {KeyboardAvoidingView} from 'react-native';
 
 const styles = StyleSheet.create({
   error: {
@@ -40,6 +41,13 @@ textAlign: 'center',
    marginTop: 30, 
    marginLeft: 35,
    marginRight: 30,
+  },
+  textField: {
+    borderWidth: 1,
+    backgroundColor: 'white',
+    borderColor: 'blue',
+    padding: 10,
+    margin: 10,
   },
 });
 
@@ -89,25 +97,30 @@ export default class LoginForm extends React.Component {
     }
     return (
       <View>
+      
+      
        <Text style={styles.welcome}>
           Velkommen til social på barsel
         </Text>
               <Image style={styles.logo} source={require('../assets/Logo1.png')} />
-              
+            
         <Text style={styles.header}> Log in</Text>
-        <TextInput
+        <KeyboardAvoidingView behavior="padding">   
+        <TextInput 
           placeholder="email"
           value={email}
           onChangeText={this.handleChangeEmail}
-          style={styles.inputField}
+          style={styles.textField}
         />
         <TextInput
           placeholder="password"
           value={password}
           onChangeText={this.handleChangePassword}
           secureTextEntry
-          style={styles.inputField}
+          style={styles.textField}
         />
+         </KeyboardAvoidingView>
+        
         {errorMessage && (
           <Text style={styles.error}>Error: {errorMessage}</Text>
         )}
@@ -116,7 +129,9 @@ export default class LoginForm extends React.Component {
            Don't have an account?
         </Text>
         <Button title="Sign up" onPress={() => navigation.navigate('signUpForm')} />
-      </View>
+      
+       
+        </View>
     );
   };
 

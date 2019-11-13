@@ -1,0 +1,52 @@
+// Her renderes login og signup-formularerne
+  renderLoginSignup = () => {
+    const { user } = this.state;
+
+    // Hvis der allerede er en user defineret, vises de ikke
+    if (user) {
+      return null;
+    }
+    return (
+      <ScrollView>
+          <CreateEvent/>
+      </ScrollView>
+    );
+  };
+
+  // Her renderes den aktuelle bruger som er logget ind
+  renderCurrentUser = () => {
+    const { user } = this.state;
+    // Hvis der ikke er en bruger logget ind, vises der ingenting
+    if (!user) {
+      return null;
+    }
+    // Man kan med fordel lave en separat kompomnent til dette, som modtager user som prop  
+    return (
+      <View>
+        <Text>Current user: {user.email}</Text>
+        <Button onPress={this.handleLogOut} title="Log out" />
+      </View>
+    );
+  };
+
+  render() {
+    return (
+      <View style={styles.container}>
+        
+        {this.renderCurrentUser()}
+        {this.renderLoginSignup()}
+       
+      </View>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingTop: Constants.statusBarHeight,
+    backgroundColor: '#DDF0F5',
+    padding: 8,
+  },
+});

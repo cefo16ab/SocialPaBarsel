@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, Image } from 'react-native';
+import Constants from 'expo-constants';
 
 export default class AssetExample extends React.Component {
   render() {
@@ -9,6 +10,7 @@ export default class AssetExample extends React.Component {
      
         <Text style={styles.paragraph}>
           Local files and assets can be imported by dragging and dropping them into the editor
+        
         </Text>
        
       </View>
@@ -20,6 +22,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
+    paddingTop: Constants.statusBarHeight,
     padding: 24,
   },
   paragraph: {

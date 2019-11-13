@@ -20,23 +20,27 @@ import CreateEvent from './components/CreateEvent';
 
 
 const MainTabNavigator = createMaterialTopTabNavigator({
-
-  Home: {screen: Events},
-  MyyEvents: {screen: MyEvents},
-},
-{
+  
+  Events: {screen: Events},
+  MyEvents: {screen: MyEvents},
+  
  
+},
+
+{
+  
   tabBarPosition: 'top',
   swipeEnabled: true,
   animationEnabled: true,
   
   tabBarOptions: {
-    activeTintColor: '#FFFFFF',
-    inactiveTintColor: '#F8F8F8',
+    activeTintColor: '#373838',
+    inactiveTintColor: '#b0b0b0',
     
     
     style: {
-      backgroundColor: '#633689',
+      backgroundColor: '#00fffb',
+      paddingTop: Constants.statusBarHeight,
       
     },
     labelStyle: {
@@ -118,6 +122,8 @@ export default class App extends React.Component {
     const {user} = this.state;
     if(user){
       return<MainAppContainer/>;
+      //return <UnauthenticatedAppContainer/>;
+
     
     } else{
       return <UnauthenticatedAppContainer/>;
