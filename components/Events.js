@@ -23,7 +23,7 @@ export default class Events extends React.Component {
   componentDidMount() {
     firebase
       .database()
-      .ref('/Events')
+      .ref('/Events/'+ '2500')
       .on('value', snapshot => {
         this.setState({ events: snapshot.val() });
       });
