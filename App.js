@@ -17,6 +17,7 @@ import LoginForm from './components/LoginForm';
 import Events from './components/Events';
 import MyEvents from './components/MyEvents';
 import CreateEvent from './components/CreateEvent';
+import EventProfile from './components/EventProfile';
 
 
 const MainTabNavigator = createMaterialTopTabNavigator({
@@ -56,12 +57,15 @@ const MainTabNavigator = createMaterialTopTabNavigator({
 
 });
 
+
+
 const MainAppContainer = createAppContainer(MainTabNavigator);
 
 const UnauthenticatedNavigator = createStackNavigator({
   Login: {screen: LoginForm},
 })
 const UnauthenticatedAppContainer = createAppContainer(UnauthenticatedNavigator);
+
 
 
 
@@ -122,13 +126,14 @@ export default class App extends React.Component {
     const {user} = this.state;
     if(user){
       return<MainAppContainer/>;
-      //return <UnauthenticatedAppContainer/>;
+      //return <UnauthenticatedAppContainer/>; <MainAppContainer/>;
 
     
     } else{
       return <UnauthenticatedAppContainer/>;
     }
   }
+
 }
 
 const styles = StyleSheet.create({
