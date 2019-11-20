@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {  View, Text, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
+import {  View, Text, StyleSheet, TouchableOpacity, FlatList, Image} from 'react-native';
 import PropTypes from 'prop-types';
 
 
@@ -8,15 +8,27 @@ import PropTypes from 'prop-types';
 
   
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      borderWidth: 1,
-      margin: 5,
-      padding: 5,
-      height: 50,
-      justifyContent:'center'
+  
+    label: { fontWeight: 'normal' },
+
+     
+    imageView: {
+     
+        height: 150,
+        margin: 5,
+        resizeMode:'cover',
+       
+     
     },
-    label: { fontWeight: 'bold' },
+     
+    textView: {
+     
+        width:'50%', 
+        textAlignVertical:'center',
+        padding:10,
+        color: '#000'
+     
+    },
   });
   
   export default class EventItem extends Component {
@@ -30,10 +42,14 @@ const styles = StyleSheet.create({
     render() {
       const { event } = this.props;
       return (
-        <TouchableOpacity style={styles.container} onPress={this.handlePress}>
-          <Text style={styles.label}>
+        <TouchableOpacity style={{flex:1/2, aspectRatio:1}} onPress={this.handlePress}>
+         
+           <Image style={styles.imageView} source={{ uri: event.imageUrl }} />
+          <Text style={styles.textView}>
             {event.title} {event.time}
+            
           </Text>
+         
         </TouchableOpacity>
       );
     }

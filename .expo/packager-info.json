@@ -2,8 +2,8 @@
   "devToolsPort": 19002,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 8857,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null
+  "packagerPid": 9688,
+  "expoServerNgrokUrl": "https://4m-nix.anonymous.spbny.exp.direct",
+  "packagerNgrokUrl": "https://packager.4m-nix.anonymous.spbny.exp.direct",
+  "ngrokPid": 9710
 }

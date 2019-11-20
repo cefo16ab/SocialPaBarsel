@@ -6,6 +6,7 @@ import {
   Alert,
   ActivityIndicator,
   FlatList,
+  Platform,
 } from 'react-native';
 import Constants from 'expo-constants';
 import firebase from 'firebase';
@@ -44,11 +45,12 @@ export default class Events extends React.Component {
     // Vi skal også bruge alle IDer, så vi tager alle keys også.
     const eventKeys = Object.keys(events);
     return (
-      <View>
+      <View style={styles.container}>
         <FlatList
           data={eventArray}
           // Vi bruger carKeys til at finde ID på den aktuelle bil og returnerer dette som key, og giver det med som ID til CarListItem
           keyExtractor={(item, index) => eventKeys[index]}
+          numColumns={2}
           renderItem={({ item, index }) => (
             <EventItem
               event={item}
@@ -61,3 +63,15 @@ export default class Events extends React.Component {
     );
   }
 }
+const styles = StyleSheet.create({
+container: {
+  
+    flex: 1,
+    justifyContent: 'space-between',
+    
+
+paddingTop: (Platform.OS) === 'ios' ? 20 : 0,
+  
+    margin: 5,
+},
+});
