@@ -64,8 +64,9 @@ const styles = StyleSheet.create({
   
     render() {
       const { event } = this.props;
+      console.log(event.imageUrl);
       return (
-        <TouchableOpacity style={{flex:1/2, aspectRatio:1}} onPress={this.handlePress}>
+        <TouchableOpacity style={{flex:1/2, aspectRatio:1,}} onPress={this.handlePress}>
          
            <Image style={styles.imageView} source={{ uri: event.imageUrl }} />
           <Text style={styles.textView}>
