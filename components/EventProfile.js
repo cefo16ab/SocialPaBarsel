@@ -3,25 +3,37 @@ import { View, Text, Image, StyleSheet } from 'react-native';
 
 //import { SearchBar } from 'react-native-paper';
 export default class EventProfile extends React.Component {
- /*   state = {
-        search: '',
-      };
-    
-      updateSearch = search => {
-        this.setState({ search });
-      };
-*/
+    state = { event: null };
 
+    componentDidMount() {
+      // Vi udlæser ID fra navgation parametre og loader bilen når komponenten starter
+      const id = this.props.navigation.getParam('id');
+      this.loadEvent(id);
+    }
+  
+    loadEvent = id => {
+      firebase
+        .database()
+        // ID fra funktionens argument sættes ind i stien vi læser fra
+        .ref(`/Events/${id}`)
+        .on('value', snapshot => {
+          this.setState({ event: snapshot.val() });
+        });
+    };
+  
     render() {
-        const { search } = this.state;
+        const { event } = this.state;
+        if (!evet) {
+          return <Text>No data</Text>;
+        }
         return (
           <View style={styles.container}>
-        
-            <Text style={styles.paragraph}>
-              Local files and assets can be imported by dragging and dropping them into the editor
-            </Text>
-           
-          </View>
+          
+            <View style={styles.row}>
+              <Text style={styles.label}>Brand</Text>
+              <Text style={styles.value}>{event.brand}</Text>
+            </View>
+            </View>
         );
       }
     }

@@ -102,7 +102,9 @@ export default class createEvent extends React.Component {
   uploadImage = async(uri) => {
     const response = await fetch(uri);
     const blob = await response.blob();
-    var ref = firebase.storage().ref().child("Event-image"); 
+    const imageName = "Event-image-"+Math.random()
+    console.log(imageName)
+    var ref = firebase.storage().ref().child(imageName); 
     await ref.put(blob);
     return await ref.getDownloadURL()
   }

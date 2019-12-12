@@ -41,6 +41,7 @@ textAlign: 'center',
    marginTop: 30, 
    marginLeft: 35,
    marginRight: 30,
+   
   },
   textField: {
     borderWidth: 1,
@@ -48,6 +49,9 @@ textAlign: 'center',
     borderColor: 'blue',
     padding: 10,
     margin: 10,
+  },
+  LoginView:{
+    flex:1,
   },
 });
 
@@ -96,7 +100,7 @@ export default class LoginForm extends React.Component {
       return <Text>You are now logged in</Text>;
     }
     return (
-      <View>
+      <View style={styles.LoginView}>
       
       
        <Text style={styles.welcome}>

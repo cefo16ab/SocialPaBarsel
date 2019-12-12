@@ -125,8 +125,8 @@ export default class App extends React.Component {
     
     const {user} = this.state;
     if(user){
-      return<MainAppContainer/>;
-      //return <UnauthenticatedAppContainer/>; <MainAppContainer/>;
+      
+      return  <MainAppContainer/>;
 
     
     } else{
