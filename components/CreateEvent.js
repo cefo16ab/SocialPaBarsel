@@ -2,6 +2,8 @@ import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
 import * as React from 'react';
+import DatePicker from 'react-native-datepicker'
+import TimePicker from 'react-native-simple-time-picker';
 import {
   Button,
   Text,
@@ -11,6 +13,7 @@ import {
   StyleSheet,
   Alert,
   Image,
+  ScrollView,
 
 } from 'react-native';
 import firebase from 'firebase';
@@ -27,12 +30,18 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 40,
   },
+  buttonView: {
+    width: "95%", 
+    margin: 10, 
+    backgroundColor: '#DDF0F5', 
+    
+  },
+ 
 });
 
 export default class createEvent extends React.Component {
   state = {
     title: '',
-    time: '',
     description:'',
     address:'',
     postnr: '',
@@ -44,6 +53,8 @@ export default class createEvent extends React.Component {
     isCompleted: false,
     errorMessage: null,
   };
+
+
 
 // Kaldes når vi starter en operation der skal vise en spinner
   startLoading = () => this.setState({ isLoading: true });
@@ -61,6 +72,7 @@ export default class createEvent extends React.Component {
   handleChangeAddress = address => this.setState({ address }); 
   handleChangePostnr = postnr => this.setState({ postnr });
   //uploadImage = image => this.setState({ image });
+  handleChangeDate = date => this.setState({date});
  
   componentDidMount() {
     this.getPermissionAsync();
@@ -72,7 +84,7 @@ export default class createEvent extends React.Component {
       const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
       if (status !== 'granted') {
         return(
-            <View>
+            <View >
           <Text>No access to camera.</Text>
            <Button
           style={styles.button}
@@ -110,7 +122,7 @@ export default class createEvent extends React.Component {
   }
   handleSubmit = async () => {
     // Læser værdier fra state
-    const { title, time, description, address, postnr, image } = this.state;
+    const { title, time, description, address, postnr, date, image } = this.state;
     try {
       this.startLoading();
       this.clearError();
@@ -123,7 +135,7 @@ export default class createEvent extends React.Component {
         //.auth()
         .database()
         .ref('/Events/'+ postnr)
-        .push({title, time, description, address, postnr, imageUrl });
+        .push({title, time, description, address, postnr, date, imageUrl });
       console.log(result);
       this.endLoading();
       this.setState({ isCompleted: true });
@@ -135,33 +147,42 @@ export default class createEvent extends React.Component {
     }
   };
 
+  constructor(props){
+    super(props)
+    this.state = {date:"2019-12-16"},
+    this.state = {time:"10.30"}
+  }
+
 
   render = () => {
-    const { errorMessage, title, time, description, address, postnr, image, isCompleted } = this.state;
+   
+    const { errorMessage, title, time, description, address, postnr, date, image, isCompleted } = this.state;
     if (isCompleted) {
       return <Text>You are now signed up</Text>;
     }
+  
     return (
-      <View>
-          <Text style={styles.header}>Create event</Text>
-          <Button
-          title="Pick an image from camera roll"
+      <ScrollView>
+         
+         <Text style={styles.header}>Create event</Text>
+         <View style={styles.buttonView}> 
+       <Button
+          title="Vælg et billede fra kamerarullen"
+          color="black"
           onPress={this.pickImage}
-        />
+        /></View>
+       
+         
           {image&& <Image style={{ width: 320, height: 320}} source={{uri:image}} />}
-        
+         
+
         <TextInput
           placeholder="Title"
           value={title}
           onChangeText={this.handleChangeTitle}
           style={styles.inputField}
         />
-        <TextInput
-          placeholder="Time"
-          value={time}
-          onChangeText={this.handleChangeTime}
-          style={styles.inputField}
-        />
+       
         
         <TextInput
           placeholder="Description"
@@ -182,11 +203,54 @@ export default class createEvent extends React.Component {
           onChangeText={this.handleChangePostnr}
           style={styles.inputField}
         />
+<View style={{flexDirection:'row',  justifyContent:'center'}}>
+<DatePicker
+        style={{width: 160}}
+        date={this.state.date}
+        mode="date"
+        placeholder="select date"
+        format="YYYY-MM-DD" 
+        minDate="2019-12-01" 
+        maxDate="2020-04-01"
+        confirmBtnText="Confirm"
+        cancelBtnText="Cancel"
+        customStyles={{
+          dateIcon: {
+            position: 'absolute',
+            left: 0,
+            top: 4,
+            marginLeft: 0
+          },
+          dateInput: {
+            marginLeft: 36
+          }
+          // ... You can check the source to find the other keys.
+        }}
+        onDateChange={this.handleChangeDate}
+      />
+
+<DatePicker
+        style={{width: 160}}
+        time={this.state.time}
+        mode="time"
+        placeholder="select time"
+        format="hh.mm" 
+        confirmBtnText="Confirm"
+        cancelBtnText="Cancel"
+       
+        onTimeChange={this.handleChangeTime}
+
+      />
+
+</View>
+
+
+
         {errorMessage && (
           <Text style={styles.error}>Error: {errorMessage}</Text>
         )}
         {this.renderButton()}
-      </View>
+      </ScrollView>
     );
   };
 
@@ -199,6 +263,6 @@ export default class createEvent extends React.Component {
     if (isLoading) {
       return <ActivityIndicator />;
     }
-    return <Button onPress={this.handleSubmit} title="Create event" />;
+    return <Button onPress={this.handleSubmit} title="Create event" color="black"/>;
   };
 }

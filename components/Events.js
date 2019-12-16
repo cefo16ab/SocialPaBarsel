@@ -69,7 +69,7 @@ export default class Events extends React.Component {
     return (
 
       <View style={styles.container}>
-      <View style={{flexDirection:'row'}}> 
+      <View style={{flexDirection:'row', backgroundColor:'#DDF0F5', borderColor: "black"}}> 
         <TextInput style={styles.inputSearch}
           placeholder="Skriv postnummer"
           value={inputPostnr}
