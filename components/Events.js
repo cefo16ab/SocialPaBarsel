@@ -39,9 +39,11 @@ export default class Events extends React.Component {
       });
   }
 
- handleSelectEvent = id => {
-   this.props.navigation.navigate('EventProfile', { id });
+ handleSelectEvent = event => {
+   this.props.navigation.navigate('EventProfile', { event });
  };
+
+
  handleChangeSearch = inputPostnr => this.setState({ inputPostnr });
  handleSearch = async () => {
   

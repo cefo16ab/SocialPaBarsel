@@ -19,6 +19,10 @@ import MyEvents from './components/MyEvents';
 import CreateEvent from './components/CreateEvent';
 import EventProfile from './components/EventProfile';
 
+const EventProfileStack = createStackNavigator({
+  Events: {screen: Events},
+  EventProfile: {screen: EventProfile},
+});
 
 const MyEventsStack = createStackNavigator({
   MyEvents: {screen: MyEvents},
@@ -27,7 +31,7 @@ const MyEventsStack = createStackNavigator({
 
 const MainTabNavigator = createMaterialTopTabNavigator({
   
-  Events: {screen: Events},
+  Events: {screen: EventProfileStack},
   MyEvents: {screen: MyEventsStack},
   
  
@@ -60,22 +64,6 @@ const MainTabNavigator = createMaterialTopTabNavigator({
     
   },
 
-  
-    /* I defaultNavigationOptions definerer vi en funktion der returnerer en konfiguration
-    til TabNavigator. Som argument modtager funktionen et objekt, der blandt andet
-    indeholder feltet "navigation". Det pakker vi ud med ved at angive det inden i { }
-    således at det er tilængeligt som variabel. */
-    defaultNavigationOptions: ({ navigation }) => {
-      // Vi returnerer nu en konfiguration, som er et objekt, hvor vi sætter tabBarIcon.
-      return {
-        /* Her definerer vi en funktion som modtager et object, hvorfra vi pakker
-        tintColor ud. Denne farve bruges på knappen og skifter hvis den er aktiv. */
-        tabBarIcon: ({ tintColor }) => {
-          // Vi kalder en funktion, der giver os et ikon ud fra den aktive route.
-          return getTabBarIcon(navigation.state.routeName, tintColor);
-        },
-      };
-    },
   
 
 });

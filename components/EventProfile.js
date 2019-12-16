@@ -1,55 +1,44 @@
 import * as React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 
-//import { SearchBar } from 'react-native-paper';
-export default class EventProfile extends React.Component {
-    state = { event: null };
 
-    componentDidMount() {
-      // Vi udlæser ID fra navgation parametre og loader bilen når komponenten starter
-      const id = this.props.navigation.getParam('id');
-      this.loadEvent(id);
+export default class EventProfile extends React.Component {
+  render(){
+    const event = this.props.navigation.getParam('event');
+    // Og viser en fejlbesked hvis user ikke er defineret
+    if (!event) {
+      return <Text>No event specified in navigation params</Text>;
     }
-  
-    loadEvent = id => {
-      firebase
-        .database()
-        // ID fra funktionens argument sættes ind i stien vi læser fra
-        .ref(`/Events/${id}`)
-        .on('value', snapshot => {
-          this.setState({ event: snapshot.val() });
-        });
-    };
-  
-    render() {
-        const { event } = this.state;
-        if (!evet) {
-          return <Text>No data</Text>;
-        }
-        return (
-          <View style={styles.container}>
-          
-            <View style={styles.row}>
-              <Text style={styles.label}>Brand</Text>
-              <Text style={styles.value}>{event.brand}</Text>
-            </View>
-            </View>
-        );
-      }
-    }
+    return (
+      <View style={styles.container}>
+        <Image style={styles.image} source={{ uri: event.imageUrl }} />
+          <Text style={styles.header}>
+            {event.title} {event.time}
+            
+          </Text>
+        <Text>{event.description}</Text>
+        <Text>{event.date}</Text>
+        <Text>
+        {event.address}
+        </Text>
+      </View>
+    );
+  }
+}
     
     const styles = StyleSheet.create({
+      // Man skal altid angive størrelsen på billeeder som loades fra netværk
+      image: {
+        width: 300,
+        height: 300,
+        marginRight: 10,
+      },
       container: {
+        margin: 10,
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 24,
       },
-      paragraph: {
-        margin: 24,
-        marginTop: 0,
-        fontSize: 14,
-        fontWeight: 'bold',
-        textAlign: 'center',
-      }
+      header: {
+        fontSize: 24,
+      },
     });
-    

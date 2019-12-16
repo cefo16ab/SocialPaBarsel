@@ -61,12 +61,15 @@ const styles = StyleSheet.create({
       // Kalder den onSelect prop vi får, med det ID vi har fået som argument.
      // onSelect(id)
   //  };
-  
+  handleSelect = () => {
+    const { event, onSelect } = this.props;
+    onSelect(event);
+  };
     render() {
       const { event } = this.props;
       console.log(event.imageUrl);
       return (
-        <TouchableOpacity style={{flex:1/2, aspectRatio:1,}} onPress={this.handlePress}>
+        <TouchableOpacity style={{flex:1/2, aspectRatio:1,}} onPress={this.handleSelect}>
          
            <Image style={styles.imageView} source={{ uri: event.imageUrl }} />
           <Text style={styles.textView}>
