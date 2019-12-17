@@ -9,8 +9,21 @@ export default class AssetExample extends React.Component {
   render() {
     return (
 
-      <View style={{ alignItems: "center", flexDirection: 'row', justifyContent:'space-between', margin: 5 }}>
+
+
+
+     
+       
+      <View>
+        <View style={styles.buttonView}>
+        <Button title="Opret event" onPress={this.handleGoToCreate}  color="black" />
+        </View>
+        <ScrollView>
+        <Text>Tilmeldte events</Text>
+        <Text>____________________________________________</Text>
+        <View style={{ alignItems: "center", flexDirection: 'row', justifyContent:'space-between', margin: 5 }}>
       <View style={{ backgroundColor: "#eee", borderRadius: 2, overflow: "hidden" }}>
+        
         <View>
           <Image
             source={require('../assets/baby_svom.jpg')}
@@ -46,9 +59,54 @@ export default class AssetExample extends React.Component {
         </View>
      
       </View>
-    </View>
       
-
+      </View>
+      <Text>Tilmeldte events</Text>
+        <Text>____________________________________________</Text>
+      <View style={{ alignItems: "center", flexDirection: 'row', justifyContent:'space-between', margin: 5 }}>
+      <View style={{ backgroundColor: "#eee", borderRadius: 2, overflow: "hidden" }}>
+        
+        <View>
+          <Image
+            source={require('../assets/gaatur.jpg')}
+            style={{
+              height: 175,
+              width: 175
+            }}
+          />
+        </View>
+        <View style={{ padding: 10, width: 175 }}>
+          <Text>Title</Text>
+          <Text style={{ color: "#777", paddingTop: 5 }}>
+            Description of the image
+          </Text>
+        </View>
+     
+      </View>
+      <View style={{ backgroundColor: "#eee", borderRadius: 2, overflow: "hidden" }}>
+        <View>
+          <Image
+            source={require('../assets/coffee.jpg')}
+            style={{
+              height: 175,
+              width: 175
+            }}
+          />
+        </View>
+        <View style={{ padding: 10, width: 175 }}>
+          <Text>Title</Text>
+          <Text style={{ color: "#777", paddingTop: 5 }}>
+            Description of the image
+          </Text>
+        </View>
+     
+      </View>
+      
+      </View>
+      </ScrollView>
+    </View>
+    
+  
      
     );
   }
