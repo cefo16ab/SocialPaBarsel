@@ -13,6 +13,7 @@ import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
 import Constants from 'expo-constants';
 import firebase from 'firebase';
 import SignUpForm from './components/SignUpForm';
+import SignUpInfo from './components/SignUpInfo';
 import LoginForm from './components/LoginForm';
 import Events from './components/Events';
 import MyEvents from './components/MyEvents';
@@ -28,6 +29,17 @@ const MyEventsStack = createStackNavigator({
   MyEvents: {screen: MyEvents},
   CreateEvent: {screen: CreateEvent},
 });
+
+const LoginStack = createStackNavigator({
+  LoginForm: {screen: LoginForm},
+  SignUpForm: {screen: SignUpForm},
+  SignUpInfo: {screen: SignUpInfo},
+});
+
+//const SignUpStack = createStackNavigator({
+ // SignUpForm: {screen: SignUpForm},
+ // SignUpInfo: {screen: SignUpInfo},
+//});
 
 const MainTabNavigator = createMaterialTopTabNavigator({
   
@@ -73,7 +85,7 @@ const MainTabNavigator = createMaterialTopTabNavigator({
 const MainAppContainer = createAppContainer(MainTabNavigator);
 
 const UnauthenticatedNavigator = createStackNavigator({
-  Login: {screen: LoginForm},
+  LoginFrom: {screen: LoginStack},
 })
 const UnauthenticatedAppContainer = createAppContainer(UnauthenticatedNavigator);
 

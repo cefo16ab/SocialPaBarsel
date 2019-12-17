@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Alert,
   Image,
+  ScrollView,
 } from 'react-native';
 import firebase from 'firebase';
 import {KeyboardAvoidingView} from 'react-native';
@@ -94,20 +95,27 @@ export default class LoginForm extends React.Component {
     }
   };
 
+  HandleGoToSignup = () => {
+    this.props.navigation.navigate('SignUpForm');
+  };
+
   render = () => {
     const { errorMessage, email, password, isCompleted } = this.state;
     if (isCompleted) {
       return <Text>You are now logged in</Text>;
     }
     return (
-      <View style={styles.LoginView}>
+      <ScrollView style={styles.LoginView}>
       
       
        <Text style={styles.welcome}>
           Velkommen til social på barsel
         </Text>
               <Image style={styles.logo} source={require('../assets/Logo1.png')} />
-            
+              <Text style={styles.text}>
+           Don't have an account?
+         </Text>
+              <Button title="Sign up" onPress={this.HandleGoToSignup} />
         <Text style={styles.header}> Log in</Text>
         <KeyboardAvoidingView behavior="padding">   
         <TextInput 
@@ -129,13 +137,11 @@ export default class LoginForm extends React.Component {
           <Text style={styles.error}>Error: {errorMessage}</Text>
         )}
         {this.renderButton()}
-        <Text style={styles.text}>
-           Don't have an account?
-        </Text>
-        <Button title="Sign up" onPress={() => navigation.navigate('signUpForm')} />
+        
+        
       
        
-        </View>
+        </ScrollView>
     );
   };
 

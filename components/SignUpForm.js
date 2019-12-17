@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
   StyleSheet,
   Alert,
+  TouchableOpacity,
 } from 'react-native';
 import firebase from 'firebase';
 
@@ -30,7 +31,7 @@ export default class SignUpForm extends React.Component {
     password: '',
     isLoading: false,
     isCompleted: false,
-    errorMessage: null,
+    errorMessage: false,
   };
 
 // Kaldes når vi starter en operation der skal vise en spinner
@@ -42,13 +43,16 @@ export default class SignUpForm extends React.Component {
   // Kaldes når vi prøver igen og aktuelle fejl skal fjernes
   clearError = () => this.setState({ errorMessage: null });
 
+//  handleGoToSigupInfo = () => {
+ //   this.props.navigation.navigate('SignUpInfo');
+ // };
   // Event handlers som opdaterer state hver gang feltets indhold ændres
   handleChangeEmail = email => this.setState({ email });
   handleChangePassword = password => this.setState({ password });
 
   handleSubmit = async () => {
     // Læser værdier fra state
-    const { email, password } = this.state;
+    const { email, password} = this.state;
     try {
       this.startLoading();
       this.clearError();
@@ -66,10 +70,15 @@ export default class SignUpForm extends React.Component {
     }
   };
 
+  //functionCombined = async () => {
+  //  this.handleSubmit
+  //  this.handleGoToSigupInfo
+  //};
+
   render = () => {
     const { errorMessage, email, password, isCompleted } = this.state;
     if (isCompleted) {
-      return <Text>You are now signed up</Text>;
+      this.props.navigation.navigate('SignUpInfo');
     }
     return (
       <View>
@@ -103,3 +112,4 @@ export default class SignUpForm extends React.Component {
     return <Button onPress={this.handleSubmit} title="Create user" />;
   };
 }
+//onPress={this.handleSubmit}

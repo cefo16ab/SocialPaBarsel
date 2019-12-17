@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, Image, Button } from 'react-native';
+import { Text, View, StyleSheet, Image, Button, TouchableOpacity, ScrollView } from 'react-native';
 
 export default class AssetExample extends React.Component {
   handleGoToCreate = () => {
@@ -8,20 +8,70 @@ export default class AssetExample extends React.Component {
   
   render() {
     return (
-      <View style={styles.buttonView}>
-        <Button title="Opret event" onPress={this.handleGoToCreate}  color="black" />
-       
+
+      <View style={{ alignItems: "center", flexDirection: 'row', justifyContent:'space-between', margin: 5 }}>
+      <View style={{ backgroundColor: "#eee", borderRadius: 2, overflow: "hidden" }}>
+        <View>
+          <Image
+            source={require('../assets/baby_svom.jpg')}
+            style={{
+              height: 175,
+              width: 175
+            }}
+          />
+        </View>
+        <View style={{ padding: 10, width: 175 }}>
+          <Text>Title</Text>
+          <Text style={{ color: "#777", paddingTop: 5 }}>
+            Description of the image
+          </Text>
+        </View>
+     
       </View>
+      <View style={{ backgroundColor: "#eee", borderRadius: 2, overflow: "hidden" }}>
+        <View>
+          <Image
+            source={require('../assets/coffee.jpg')}
+            style={{
+              height: 175,
+              width: 175
+            }}
+          />
+        </View>
+        <View style={{ padding: 10, width: 175 }}>
+          <Text>Title</Text>
+          <Text style={{ color: "#777", paddingTop: 5 }}>
+            Description of the image
+          </Text>
+        </View>
+     
+      </View>
+    </View>
+      
+
+     
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 10,
+    
+     height: 150,
+     width: 150,
+      margin: 10,
   },
+
+  containerNy: {
+    
+    flexDirection:'row',
+    flex: 1,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    backgroundColor: 'tomato'
+ },
+
+
   paragraph: {
     margin: 24,
     marginTop: 0,
@@ -36,7 +86,14 @@ const styles = StyleSheet.create({
     
   },
   logo: {
-    height: 128,
-    width: 128,
+    height: 150,
+    width: 150,
+    margin: 10,
+  },
+  imageView: {
+  
+    height: 150,
+    margin: 5,
+    resizeMode:'cover',
   }
 });
