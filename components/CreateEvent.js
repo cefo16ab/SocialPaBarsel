@@ -14,6 +14,7 @@ import {
   Alert,
   Image,
   ScrollView,
+  TouchableOpacity,
 
 } from 'react-native';
 import firebase from 'firebase';
@@ -36,6 +37,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#DDF0F5', 
     
   },
+  buttonHover: {
+    marginTop: 10,
+    borderRadius:25,
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingLeft: 50,
+    paddingRight: 50,
+    shadowColor: 'rgba(162, 191, 191, 0.4)',
+    shadowOpacity: 1.5,
+    elevation: 8,
+    shadowRadius: 20 ,
+    shadowOffset : { width: 1, height: 13},
+    backgroundColor: '#A2BFBF',
+    color: '#FFFFFF'
+  }
  
 });
 
@@ -149,7 +165,7 @@ export default class createEvent extends React.Component {
 
   constructor(props){
     super(props)
-    this.state = {date:"2019-12-16"},
+    this.state = {date:"16-12-2019"},
     this.state = {time:"10.30"}
   }
 
@@ -165,12 +181,12 @@ export default class createEvent extends React.Component {
       <ScrollView>
          
          <Text style={styles.header}>Create event</Text>
-         <View style={styles.buttonView}> 
+         <TouchableOpacity style={styles.buttonHover}>
        <Button
           title="Vælg et billede fra kamerarullen"
-          color="black"
+         color='black'
           onPress={this.pickImage}
-        /></View>
+        /></TouchableOpacity>
        
          
           {image&& <Image style={{ width: 320, height: 320}} source={{uri:image}} />}
@@ -209,9 +225,9 @@ export default class createEvent extends React.Component {
         date={this.state.date}
         mode="date"
         placeholder="select date"
-        format="YYYY-MM-DD" 
-        minDate="2019-12-01" 
-        maxDate="2020-04-01"
+        format="DD-MM-YYYY" 
+        minDate="01-12-2019" 
+        maxDate="01-04-2020"
         confirmBtnText="Confirm"
         cancelBtnText="Cancel"
         customStyles={{

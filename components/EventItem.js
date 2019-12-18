@@ -37,9 +37,11 @@ const styles = StyleSheet.create({
      
     imageView: {
      
-        height: 150,
-        margin: 5,
-        resizeMode:'cover',
+     
+        height: 175,
+        width: 175,
+        
+        
        
      
     },
@@ -51,6 +53,10 @@ const styles = StyleSheet.create({
         padding:10,
         color: '#000'
      
+    },
+    textStyle:{
+      color: "#777", 
+      paddingTop: 5
     },
   });
   
@@ -69,14 +75,21 @@ const styles = StyleSheet.create({
       const { event } = this.props;
       console.log(event.imageUrl);
       return (
-        <TouchableOpacity style={{flex:1/2, aspectRatio:1,}} onPress={this.handleSelect}>
-         
+        <TouchableOpacity style={{flex:1/2, aspectRatio:1, alignItems: "center", justifyContent:'space-between', marginBottom: 120 }} onPress={this.handleSelect}>
+         <View style={{ backgroundColor: "#eee", borderRadius: 2, overflow: "hidden"}}>
            <Image style={styles.imageView} source={{ uri: event.imageUrl }} />
-          <Text style={styles.textView}>
-            {event.title} {event.time}
-            
-          </Text>
-         
+           <View style={{ padding: 10, width: 175 }}>
+            <Text>{event.title}</Text>
+             
+             <Text style={styles.textStyle}>
+             dato: {event.date} 
+             </Text>
+             <Text style={styles.textStyle}>
+             kl. {event.time}
+             </Text>
+          </View>
+          </View>
+          
         </TouchableOpacity>
       );
     }

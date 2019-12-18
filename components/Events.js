@@ -9,13 +9,16 @@ import {
   Platform,
   TextInput,
   Button,
+  TouchableOpacity,
   
 } from 'react-native';
 import Constants from 'expo-constants';
+
 import firebase from 'firebase';
 import EventItem from './EventItem';
 import EventProfile from './EventProfile';
 import { getTimeFieldValues } from 'uuid-js';
+
 
 
 
@@ -71,16 +74,20 @@ export default class Events extends React.Component {
     return (
 
       <View style={styles.container}>
-      <View style={{flexDirection:'row', backgroundColor:'#DDF0F5', borderColor: "black"}}> 
-        <TextInput style={styles.inputSearch}
-          placeholder="Skriv postnummer"
+        
+      <TouchableOpacity style={styles.buttonPostnr}> 
+      
+        <TextInput style={styles.inputField} 
+          placeholder="Skriv postnummer                  søg"
           value={inputPostnr}
           onChangeText={this.handleChangeSearch}
         />
        
-        <Button color='black'  onPress={this.handleSearch} title="Press" backgroundColor='#DDF0F5'/>
-        </View>
-      
+       
+        </TouchableOpacity>
+      <Text>
+        
+      </Text>
       
         <FlatList
           data={eventArray}
@@ -107,23 +114,42 @@ container: {
     justifyContent: 'space-between',
     paddingTop: (Platform.OS) === 'ios' ? 20 : 0,
      margin: 5,
+    
 },
 inputField: {
-  borderWidth: 1,
-  margin: 10,
-  padding: 10,
+  borderWidth: 2,
+  margin: 5,
+  padding: 5,
+  borderColor: '#99B6B6',
+    
 
 },
 
 buttonPostnr:{
+
+ 
+  marginTop: 5,
+ 
+  paddingTop: 1,
+  paddingBottom: 1,
+  paddingLeft: 1,
+  paddingRight: 1,
+  flexDirection: 'row',
+  shadowColor: 'rgba(162, 191, 191, 0.4)',
+  shadowOpacity: 1.5,
+  
+  //shadowRadius: 20 ,
+  shadowOffset : { width: 1, height: 10},
+  backgroundColor: '#A2BFBF',
+  color: '#FFFFFF'
 //marginLeft: -50,
 //height: 20,
 //width: 50,
-backgroundColor: '#DDF0F5',
+//backgroundColor: '#DDF0F5',
 //borderColor: '#DDF0F5',
 //borderWidth: 1,
 //color: 'white',
-fontSize: 24,
+//fontSize: 24,
 //fontWeight: 'bold',
 //overflow: 'hidden',
 //textAlign:'center',
@@ -133,6 +159,8 @@ inputSearch:{
   //height:20,
   //paddingRight:50,
   backgroundColor: '#DDF0F5',
+ 
+ 
 },
 
 buttonStyle:{

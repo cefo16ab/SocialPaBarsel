@@ -1,8 +1,13 @@
 import * as React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, Button } from 'react-native';
 
 
 export default class EventProfile extends React.Component {
+  alertHandler=()=>{
+    //function to make simple alert
+    alert('Du er tilmeldt');
+  }
+
   render(){
     const event = this.props.navigation.getParam('event');
     // Og viser en fejlbesked hvis user ikke er defineret
@@ -11,16 +16,25 @@ export default class EventProfile extends React.Component {
     }
     return (
       <View style={styles.container}>
+      <View style={styles.containerTo}>
         <Image style={styles.image} source={{ uri: event.imageUrl }} />
+        <View style={{ padding: 10, width: 300, alignItems: 'center', }}>
           <Text style={styles.header}>
-            {event.title} {event.time}
+            {event.title} 
             
           </Text>
         <Text>{event.description}</Text>
-        <Text>{event.date}</Text>
-        <Text>
-        {event.address}
-        </Text>
+        <Text style={{fontSize: 17, padding: 7}}>Tidspunkt</Text> 
+        <Text>{event.date} kl.{event.time}</Text>
+        <Text style={{fontSize: 17, padding: 7}}>Adresse</Text> 
+        <Text>{event.address}, {event.postnr}</Text>
+        
+        <View>
+          <Button title="Tilmeld" onPress={this.alertHandler}></Button>
+        </View>
+
+        </View>
+      </View>
       </View>
     );
   }
@@ -31,14 +45,24 @@ export default class EventProfile extends React.Component {
       image: {
         width: 300,
         height: 300,
-        marginRight: 10,
+        
       },
       container: {
-        margin: 10,
+       
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: "#eee", 
+        borderRadius: 2, 
+        overflow: "hidden"
+      },
+
+      containerTo: {
+        alignItems: "center", 
+        justifyContent:'space-around', 
+        margin: 5
       },
       header: {
         fontSize: 24,
+        
       },
     });
