@@ -3,21 +3,15 @@ import {
   Text,
   View,
   StyleSheet,
-  Alert,
-  ActivityIndicator,
   FlatList,
   Platform,
   TextInput,
-  Button,
   TouchableOpacity,
   
 } from 'react-native';
-import Constants from 'expo-constants';
-
 import firebase from 'firebase';
 import EventItem from './EventItem';
-import EventProfile from './EventProfile';
-import { getTimeFieldValues } from 'uuid-js';
+
 
 
 
@@ -41,18 +35,18 @@ export default class Events extends React.Component {
         this.setState({ events: snapshot.val() });
       });
   }
-
+ // handler der håndtere navigation
  handleSelectEvent = event => {
    this.props.navigation.navigate('EventProfile', { event });
  };
 
-
+ //handler der opdaterer state når indholdet i feltet bliver ændret
  handleChangeSearch = inputPostnr => this.setState({ inputPostnr });
+ 
+ // search fungere ikke
  handleSearch = async () => {
   
-    // Her kalder vi den rette funktion fra firebase auth
     firebase
-      //.auth()
       .database()
       .ref('/Events/'+ inputPostnr)
       .once('value', snapshot => {
@@ -63,27 +57,24 @@ export default class Events extends React.Component {
     const { inputPostnr } = this.state;
     const { events } = this.state;
 
-    // Vi viser ingenting hvis der ikke er data
+    // hvis der ikke er data, vises der ingenting
     if (!events) {
       return null;
     }
-    // Flatlist forventer et array. Derfor tager vi alle values fra vores cars objekt, og bruger som array til listen
+    //tager alle values fra events objekt og bruger som array i listen
+   
     const eventArray = Object.values(events);
-    // Vi skal også bruge alle IDer, så vi tager alle keys også.
+    //skal bruge id, så vi tager alle keys.
     const eventKeys = Object.keys(events);
     return (
 
       <View style={styles.container}>
-        
       <TouchableOpacity style={styles.buttonPostnr}> 
-      
         <TextInput style={styles.inputField} 
           placeholder="Skriv postnummer                  søg"
           value={inputPostnr}
           onChangeText={this.handleChangeSearch}
         />
-       
-       
         </TouchableOpacity>
       <Text>
         
@@ -109,11 +100,10 @@ export default class Events extends React.Component {
 }
 const styles = StyleSheet.create({
 container: {
-  
-    flex: 1,
-    justifyContent: 'space-between',
-    paddingTop: (Platform.OS) === 'ios' ? 20 : 0,
-     margin: 5,
+  flex: 1,
+  justifyContent: 'space-between',
+  paddingTop: (Platform.OS) === 'ios' ? 5 : 0,
+  margin: 5,
     
 },
 inputField: {
@@ -121,15 +111,10 @@ inputField: {
   margin: 5,
   padding: 5,
   borderColor: '#99B6B6',
-    
-
 },
 
 buttonPostnr:{
-
- 
-  marginTop: 5,
- 
+  marginTop: 1,
   paddingTop: 1,
   paddingBottom: 1,
   paddingLeft: 1,
@@ -138,7 +123,7 @@ buttonPostnr:{
   shadowColor: 'rgba(162, 191, 191, 0.4)',
   shadowOpacity: 1.5,
   
-  //shadowRadius: 20 ,
+  shadowRadius: 20 ,
   shadowOffset : { width: 1, height: 10},
   backgroundColor: '#A2BFBF',
   color: '#FFFFFF'
@@ -153,20 +138,6 @@ buttonPostnr:{
 //fontWeight: 'bold',
 //overflow: 'hidden',
 //textAlign:'center',
-},
-inputSearch:{
-  width: 280,
-  //height:20,
-  //paddingRight:50,
-  backgroundColor: '#DDF0F5',
- 
- 
-},
-
-buttonStyle:{
- backgroundColor:'#DDF0F5',
- color:'white',
-
 },
 
 });

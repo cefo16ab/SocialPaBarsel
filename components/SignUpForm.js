@@ -6,8 +6,6 @@ import {
   TextInput,
   ActivityIndicator,
   StyleSheet,
-  Alert,
-  TouchableOpacity,
 } from 'react-native';
 import firebase from 'firebase';
 
@@ -34,29 +32,23 @@ export default class SignUpForm extends React.Component {
     errorMessage: false,
   };
 
-// Kaldes når vi starter en operation der skal vise en spinner
+
   startLoading = () => this.setState({ isLoading: true });
-  // Kaldes når en operation er færdig
   endLoading = () => this.setState({ isLoading: false });
-  // Kaldes når der er sket en fejl og den skal vises
   setError = errorMessage => this.setState({ errorMessage });
-  // Kaldes når vi prøver igen og aktuelle fejl skal fjernes
   clearError = () => this.setState({ errorMessage: null });
 
-//  handleGoToSigupInfo = () => {
- //   this.props.navigation.navigate('SignUpInfo');
- // };
-  // Event handlers som opdaterer state hver gang feltets indhold ændres
+ //handler der opdaterer state når indholdet i feltet bliver ændret
   handleChangeEmail = email => this.setState({ email });
   handleChangePassword = password => this.setState({ password });
 
   handleSubmit = async () => {
-    // Læser værdier fra state
+    // læser værdier fra state
     const { email, password} = this.state;
     try {
       this.startLoading();
       this.clearError();
-      // Her kalder vi den rette funktion fra firebase auth
+      // kalder den rette funktion fra firebase til at tilføje værdier til auth
       const result = await firebase
         .auth()
         .createUserWithEmailAndPassword(email, password);
@@ -64,16 +56,11 @@ export default class SignUpForm extends React.Component {
       this.endLoading();
       this.setState({ isCompleted: true });
     } catch (error) {
-      // Vi sender `message` feltet fra den error der modtages, videre. 
       this.setError(error.message);
       this.endLoading();
     }
   };
 
-  //functionCombined = async () => {
-  //  this.handleSubmit
-  //  this.handleGoToSigupInfo
-  //};
 
   render = () => {
     const { errorMessage, email, password, isCompleted } = this.state;
@@ -112,4 +99,3 @@ export default class SignUpForm extends React.Component {
     return <Button onPress={this.handleSubmit} title="Create user" />;
   };
 }
-//onPress={this.handleSubmit}

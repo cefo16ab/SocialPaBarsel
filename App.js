@@ -1,13 +1,6 @@
 import * as React from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  KeyboardAvoidingView,
-  ScrollView,
-  Button,
-} from 'react-native';
-import { createAppContainer } from 'react-navigation';
+
+import { createAppContainer} from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
 import Constants from 'expo-constants';
@@ -36,21 +29,11 @@ const LoginStack = createStackNavigator({
   SignUpInfo: {screen: SignUpInfo},
 });
 
-//const SignUpStack = createStackNavigator({
- // SignUpForm: {screen: SignUpForm},
- // SignUpInfo: {screen: SignUpInfo},
-//});
-
 const MainTabNavigator = createMaterialTopTabNavigator({
-  
   Events: {screen: EventProfileStack},
   MyEvents: {screen: MyEventsStack},
-  
- 
 },
-
 {
-  
   tabBarPosition: 'top',
   swipeEnabled: true,
   animationEnabled: true,
@@ -58,29 +41,20 @@ const MainTabNavigator = createMaterialTopTabNavigator({
   tabBarOptions: {
     activeTintColor: '#373838',
     inactiveTintColor: '#b0b0b0',
-    
-    
+
     style: {
       backgroundColor: '#00fffb',
-      paddingTop: Constants.statusBarHeight,
-      
+      paddingTop: Constants.statusBarHeight,  
     },
     labelStyle: {
       textAlign: 'center',
     },
     indicatorStyle: {
       borderBottomColor: '#87B56A',
-      borderBottomWidth: 2,
-        
+      borderBottomWidth: 2, 
     },
-    
   },
-
-  
-
 });
-
-
 
 const MainAppContainer = createAppContainer(MainTabNavigator);
 
@@ -104,14 +78,14 @@ export default class App extends React.Component {
         messagingSenderId: "338726840479",
         appId: "1:338726840479:web:3be187c00a4a189f3d1aaa"
       };
-    // Vi kontrollerer at der ikke allerede er en initialiseret instans af firebase
-    // Så undgår vi fejlen Firebase App named '[DEFAULT]' already exists (app/duplicate-app).
+    // kontrollerer at der ikke allerede er en initialiseret instans af firebase
+    // så undgår vi fejlen Firebase App named '[DEFAULT]' already exists (app/duplicate-app).
     if (firebase.apps.length === 0) {
       firebase.initializeApp(firebaseConfig);
     }
 
-    // Vi opsætter en event handler som udføres hver gang authentication state ændres,
-    // Dvs når en bruger fx logger ind/ud/tilmelder sig
+    // event handler som udføres hver gang authentication state ændres,
+    // fx logger ind/ud/tilmelder 
     this.authStateChangeUnsubscribe = firebase
       .auth()
       .onAuthStateChanged(user => {
@@ -121,14 +95,10 @@ export default class App extends React.Component {
       });
   }
 
-  // Her nedlægger vi den funktion som lytter på om authentication state ændrer sig.
-  // Dette er for at undgå at der bliver sat flere listeners op jo flere gange appen reloades.
-  // Inden den kaldes kontrolleres det at unsubscribe-funktionen findes, dvs at der pt er sat en subscription op
   componentWillUnmount() {
     this.authStateChangeUnsubscribe && this.authStateChangeUnsubscribe();
   }
 
-  // Unsubscribe funktionen deklareres og er tom til at starte med
   authStateChangeUnsubscribe = null;
 
  
@@ -139,11 +109,12 @@ export default class App extends React.Component {
 
   
 
-  // App komponenten har et user felt i sin state, som er den user som pt. er logget ind. Den er null hvis ingen user er logget ind
+  // null hvis ingen user er logget ind
   state = {
     user: null,
   };
 
+  //viser forskelle AppContainer, hvis user er null eller logget ind
   render() {
     
     const {user} = this.state;
@@ -159,12 +130,3 @@ export default class App extends React.Component {
 
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingTop: Constants.statusBarHeight,
-    backgroundColor: '#DDF0F5',
-    padding: 8,
-  },
-});

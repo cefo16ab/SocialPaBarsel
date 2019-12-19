@@ -1,23 +1,43 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, Image, Button, TouchableOpacity, ScrollView } from 'react-native';
-
+import { DropdownMenu, MenuItem } from 'react-bootstrap-dropdown-menu';
+import firebase from 'firebase';
 export default class AssetExample extends React.Component {
+  //handler der håndtere navigation
   handleGoToCreate = () => {
     this.props.navigation.navigate('CreateEvent');
   };
   alertHandler=()=>{
-    //function to make simple alert
+    //funktion der laver simpel alert
     alert('Du er frameldt eventet');
   }
+ 
+ 
+
+ 
+
+  handleLogOut = async () => {
+    await firebase.auth().signOut();
+    
+  };
+ 
+  
+  
   
   render() {
+    
+    // Hvis der ikke er en bruger logget ind, vises der ingenting
+   
     return (
-
+   
+      <ScrollView>
       <View>
         <TouchableOpacity style={styles.buttonHover}>
         <Button title="Opret event" onPress={this.handleGoToCreate}  color="black" />
         </TouchableOpacity>
-        <ScrollView>
+        
+ 
+       
           <Text>
 
           </Text>
@@ -107,61 +127,23 @@ export default class AssetExample extends React.Component {
       </View>
       
       </View>
-      </ScrollView>
+      <Button onPress={this.handleLogOut} title="Log out" />
+      
     </View>
     
-  
+    </ScrollView>
      
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    
-     height: 150,
-     width: 150,
-      margin: 10,
-  },
 
-  containerNy: {
-    
-    flexDirection:'row',
-    flex: 1,
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    backgroundColor: 'tomato'
- },
-
-
-  paragraph: {
-    margin: 24,
-    marginTop: 0,
-    fontSize: 14,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  buttonView: {
-    width: "95%", 
-    margin: 10, 
-    backgroundColor: '#DDF0F5', 
-    
-  },
-  logo: {
-    height: 150,
-    width: 150,
-    margin: 10,
-  },
-  imageView: {
-  
-    height: 150,
-    margin: 5,
-    resizeMode:'cover',
-  },
- 
   buttonHover: {
     marginTop: 10,
-    borderRadius:25,
+    borderRadius:1,
+    marginLeft: 4,
+    marginRight: 4,
     paddingTop: 5,
     paddingBottom: 5,
     paddingLeft: 50,
@@ -173,6 +155,28 @@ const styles = StyleSheet.create({
     shadowOffset : { width: 1, height: 13},
     backgroundColor: '#A2BFBF',
     color: '#FFFFFF'
-  }
+  },
+  top:{
+    backgroundColor: '#FFFFFF',
+    paddingTop: 20,
+    top: 0,
+    height: 64,
+    right: 0,
+    left: 0,
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#828287',
+    position: 'relative',
+  },
+  text:{
+    marginTop:20,
+  },
+  rightButton: {
+    width: 100,
+    height: 37,
+    position: 'absolute',
+    bottom: 8,
+    right: 2,
+    padding: 8
+  },
 
 });

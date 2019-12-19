@@ -3,7 +3,6 @@ import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
 import * as React from 'react';
 import DatePicker from 'react-native-datepicker'
-import TimePicker from 'react-native-simple-time-picker';
 import {
   Button,
   Text,
@@ -11,7 +10,6 @@ import {
   TextInput,
   ActivityIndicator,
   StyleSheet,
-  Alert,
   Image,
   ScrollView,
   TouchableOpacity,
@@ -31,19 +29,16 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 40,
   },
-  buttonView: {
-    width: "95%", 
-    margin: 10, 
-    backgroundColor: '#DDF0F5', 
-    
-  },
+ 
   buttonHover: {
     marginTop: 10,
-    borderRadius:25,
-    paddingTop: 5,
-    paddingBottom: 5,
-    paddingLeft: 50,
-    paddingRight: 50,
+    borderRadius:1,
+    marginLeft: 10,
+    marginRight: 10,
+    paddingTop: 1,
+    paddingBottom: 1,
+    paddingLeft: 20,
+    paddingRight: 20,
     shadowColor: 'rgba(162, 191, 191, 0.4)',
     shadowOpacity: 1.5,
     elevation: 8,
@@ -72,29 +67,28 @@ export default class createEvent extends React.Component {
 
 
 
-// Kaldes når vi starter en operation der skal vise en spinner
+// bliver kaldt når vi starter en operation der skal vise en spinner
   startLoading = () => this.setState({ isLoading: true });
-  // Kaldes når en operation er færdig
+  // bliver kaldt når en operation er færdig
   endLoading = () => this.setState({ isLoading: false });
-  // Kaldes når der er sket en fejl og den skal vises
+  // bliver kaldt når der er sket en fejl og fejlen vises
   setError = errorMessage => this.setState({ errorMessage });
-  // Kaldes når vi prøver igen og aktuelle fejl skal fjernes
+  // bliver kaldt når vi prøver igen og der opstår en fejl der skal fjernes
   clearError = () => this.setState({ errorMessage: null });
 
-  // Event handlers som opdaterer state hver gang feltets indhold ændres
+  // event handlers som opdaterer state når indholdet i feltet bliver ændret
   handleChangeTitle = title => this.setState({ title });
   handleChangeTime = time => this.setState({ time });
   handleChangeDescription = description => this.setState({ description });
   handleChangeAddress = address => this.setState({ address }); 
   handleChangePostnr = postnr => this.setState({ postnr });
-  //uploadImage = image => this.setState({ image });
   handleChangeDate = date => this.setState({date});
  
   componentDidMount() {
     this.getPermissionAsync();
   }
 
-
+   // sikre at der er givet adgang til at benytte kamerarulle
   getPermissionAsync = async () => {
     if (Constants.platform.ios) {
       const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
@@ -112,7 +106,7 @@ export default class createEvent extends React.Component {
       }
     }
   }
-
+ // gør det muligt at vælge et billede i kamerarullen
   pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -126,7 +120,7 @@ export default class createEvent extends React.Component {
       this.setState({ image: result.uri });
     }
   };
-
+  // uploader image til storage i firebase 
   uploadImage = async(uri) => {
     const response = await fetch(uri);
     const blob = await response.blob();
@@ -137,18 +131,17 @@ export default class createEvent extends React.Component {
     return await ref.getDownloadURL()
   }
   handleSubmit = async () => {
-    // Læser værdier fra state
+    // læser værdier fra state
     const { title, time, description, address, postnr, date, image } = this.state;
     try {
       this.startLoading();
       this.clearError();
       const imageUrl=  await this.uploadImage (image)
-    //  console.log(uploadResult);
+   
 
 
-      // Her kalder vi den rette funktion fra firebase auth
+      // kalder den rette funktion fra firebase til at tilføje værdier
       const result = await firebase
-        //.auth()
         .database()
         .ref('/Events/'+ postnr)
         .push({title, time, description, address, postnr, date, imageUrl });
@@ -156,7 +149,7 @@ export default class createEvent extends React.Component {
       this.endLoading();
       this.setState({ isCompleted: true });
     } catch (error) {
-      // Vi sender `message` feltet fra den error der modtages, videre. 
+      // sender message feltet fra den error der modtages videre. 
       console.error(error);
       this.setError(error.message);
       this.endLoading();
@@ -187,8 +180,7 @@ export default class createEvent extends React.Component {
          color='black'
           onPress={this.pickImage}
         /></TouchableOpacity>
-       
-         
+
           {image&& <Image style={{ width: 320, height: 320}} source={{uri:image}} />}
          
 
@@ -219,8 +211,8 @@ export default class createEvent extends React.Component {
           onChangeText={this.handleChangePostnr}
           style={styles.inputField}
         />
-<View style={{flexDirection:'row',  justifyContent:'center'}}>
-<DatePicker
+      <View style={{flexDirection:'row',  justifyContent:'center'}}>
+        <DatePicker
         style={{width: 160}}
         date={this.state.date}
         mode="date"

@@ -4,15 +4,15 @@ import { View, Text, Image, StyleSheet, Button } from 'react-native';
 
 export default class EventProfile extends React.Component {
   alertHandler=()=>{
-    //function to make simple alert
+    //function der laver en simpel alert
     alert('Du er tilmeldt');
   }
 
   render(){
     const event = this.props.navigation.getParam('event');
-    // Og viser en fejlbesked hvis user ikke er defineret
+    // viser en fejlbesked hvis et event ikke er defineret
     if (!event) {
-      return <Text>No event specified in navigation params</Text>;
+      return <Text>Der er ikke et speciferet event i navigation parametret</Text>;
     }
     return (
       <View style={styles.container}>
@@ -41,11 +41,10 @@ export default class EventProfile extends React.Component {
 }
     
     const styles = StyleSheet.create({
-      // Man skal altid angive størrelsen på billeeder som loades fra netværk
+     
       image: {
         width: 300,
         height: 300,
-        
       },
       container: {
        
@@ -63,6 +62,5 @@ export default class EventProfile extends React.Component {
       },
       header: {
         fontSize: 24,
-        
       },
     });
