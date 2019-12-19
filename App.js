@@ -1,8 +1,7 @@
 import * as React from 'react';
-
 import { createAppContainer} from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
 import Constants from 'expo-constants';
 import firebase from 'firebase';
 import SignUpForm from './components/SignUpForm';
@@ -12,6 +11,7 @@ import Events from './components/Events';
 import MyEvents from './components/MyEvents';
 import CreateEvent from './components/CreateEvent';
 import EventProfile from './components/EventProfile';
+
 
 const EventProfileStack = createStackNavigator({
   Events: {screen: Events},
@@ -29,14 +29,24 @@ const LoginStack = createStackNavigator({
   SignUpInfo: {screen: SignUpInfo},
 });
 
-const MainTabNavigator = createMaterialTopTabNavigator({
+const MainTabNavigator = createBottomTabNavigator({
   Events: {screen: EventProfileStack},
   MyEvents: {screen: MyEventsStack},
 },
 {
-  tabBarPosition: 'top',
+ // tabBarPosition: 'bottom',
   swipeEnabled: true,
   animationEnabled: true,
+  initialRouteName: 'Events',
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: '#f4511e',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    },
   
   tabBarOptions: {
     activeTintColor: '#373838',
@@ -44,17 +54,32 @@ const MainTabNavigator = createMaterialTopTabNavigator({
 
     style: {
       backgroundColor: '#00fffb',
-      paddingTop: Constants.statusBarHeight,  
+      //paddingTop: Constants.statusBarHeight,  
     },
+    
     labelStyle: {
       textAlign: 'center',
+      fontSize: 20,
     },
     indicatorStyle: {
-      borderBottomColor: '#87B56A',
-      borderBottomWidth: 2, 
+      borderTopColor: '#87B56A',
+      borderTopWidth: 2, 
     },
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: '#f4511e',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+      
+    },
+ 
   },
 });
+
+
 
 const MainAppContainer = createAppContainer(MainTabNavigator);
 

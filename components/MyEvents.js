@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Text, View, StyleSheet, Image, Button, TouchableOpacity, ScrollView } from 'react-native';
 import { DropdownMenu, MenuItem } from 'react-bootstrap-dropdown-menu';
 import firebase from 'firebase';
-export default class AssetExample extends React.Component {
+export default class MyEvents extends React.Component {
   //handler der håndtere navigation
   handleGoToCreate = () => {
     this.props.navigation.navigate('CreateEvent');
@@ -22,16 +22,21 @@ export default class AssetExample extends React.Component {
   };
  
   
-  
+  static navigationOptions =
+  {
+    title: 'Mine events',
+  };
   
   render() {
-    
+    const { user } = firebase.auth();
     // Hvis der ikke er en bruger logget ind, vises der ingenting
    
     return (
-   
+     
       <ScrollView>
       <View>
+    
+        
         <TouchableOpacity style={styles.buttonHover}>
         <Button title="Opret event" onPress={this.handleGoToCreate}  color="black" />
         </TouchableOpacity>
@@ -41,51 +46,7 @@ export default class AssetExample extends React.Component {
           <Text>
 
           </Text>
-        <Text>Tilmeldte events</Text>
-        <Text>____________________________________________</Text>
-        <View style={{ alignItems: "center", flexDirection: 'row', justifyContent:'space-between', margin: 5 }}>
-      <View style={{ backgroundColor: "#eee", borderRadius: 2, overflow: "hidden" }}>
-        
-        <View>
-          <Image
-            source={require('../assets/baby_svom.jpg')}
-            style={{
-              height: 175,
-              width: 175
-            }}
-          />
-        </View>
-        <View style={{ padding: 10, width: 175 }}>
-          <Text>Title</Text>
-          <Text style={{ color: "#777", paddingTop: 5 }}>
-            Description of the image
-          </Text>
-          <Button title="Frameld" onPress={this.alertHandler}></Button>
-        </View>
-     
-      </View>
-      <View style={{ backgroundColor: "#eee", borderRadius: 2, overflow: "hidden" }}>
-        <View>
-          <Image
-            source={require('../assets/coffee.jpg')}
-            style={{
-              height: 175,
-              width: 175
-            }}
-          />
-        </View>
-        <View style={{ padding: 10, width: 175 }}>
-          <Text>Title</Text>
-          <Text style={{ color: "#777", paddingTop: 5 }}>
-            Oprettede events
-          </Text>
-          <Button title="Frameld" onPress={this.alertHandler}></Button>
-        </View>
-     
-      </View>
-      
-      </View>
-      <Text>Tilmeldte events</Text>
+          <Text style={styles.textSize}>Tilmeldte events</Text>
         <Text>____________________________________________</Text>
       <View style={{ alignItems: "center", flexDirection: 'row', justifyContent:'space-between', margin: 5 }}>
       <View style={{ backgroundColor: "#eee", borderRadius: 2, overflow: "hidden" }}>
@@ -100,9 +61,12 @@ export default class AssetExample extends React.Component {
           />
         </View>
         <View style={{ padding: 10, width: 175 }}>
-          <Text>Title</Text>
+          <Text>Gårtur i Søndermarken</Text>
           <Text style={{ color: "#777", paddingTop: 5 }}>
-            Description of the image
+            dato: 08-01-2020
+          </Text>
+          <Text style={{ color: "#777", paddingTop: 5 }}>
+            Kl.10.30
           </Text>
         </View>
      
@@ -118,13 +82,47 @@ export default class AssetExample extends React.Component {
           />
         </View>
         <View style={{ padding: 10, width: 175 }}>
-          <Text>Title</Text>
+          <Text>Kom til kaffe og kage hos mig</Text>
           <Text style={{ color: "#777", paddingTop: 5 }}>
-            Description of the image
+            dato: 04-01-2020
+          </Text>
+          <Text style={{ color: "#777", paddingTop: 5 }}>
+            kl.10
           </Text>
         </View>
      
       </View>
+      
+      </View>
+      <Text style={styles.textSize}>Oprettede events</Text>
+        <Text>____________________________________________</Text>
+      <View style={{ alignItems: "center", flexDirection: 'row', justifyContent:'space-between', margin: 5 }}>
+      <View style={{ backgroundColor: "#eee", borderRadius: 2, overflow: "hidden" }}>
+        
+        <View>
+          <Image
+            source={require('../assets/baby_svom.jpg')}
+            style={{
+              height: 175,
+              width: 175
+            }}
+          />
+        </View>
+        <View style={{ padding: 10, width: 175 }}>
+       
+          <Text>Babysvømning (6-9 mdr.)</Text>
+          <Text style={{ color: "#777", paddingTop: 5 }}>
+            dato: 10-01-2020
+          </Text>
+          <Text style={{ color: "#777", paddingTop: 5 }}>
+            kl. 12.00
+          </Text>
+        </View>
+     
+      </View>
+      
+     
+  
       
       </View>
       <Button onPress={this.handleLogOut} title="Log out" />
@@ -169,6 +167,9 @@ const styles = StyleSheet.create({
   },
   text:{
     marginTop:20,
+  },
+  textSize:{
+    fontSize: 25,
   },
   rightButton: {
     width: 100,

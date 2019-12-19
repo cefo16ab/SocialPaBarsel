@@ -7,16 +7,64 @@ import {
   Platform,
   TextInput,
   TouchableOpacity,
-  
+  Button,
+  Image,
 } from 'react-native';
+
+import { Menu, MenuProvider, MenuOptions, MenuOption, MenuTrigger} from "react-native-popup-menu";
+  
+
 import firebase from 'firebase';
 import EventItem from './EventItem';
 
 
 
 
+class SideMenu extends React.Component{
+  render() {
+    return (
+      <TouchableOpacity onPress={this.menuHandler}>
+      <Image
+        source={require('../assets/hamburger.jpg')}
+        style={{ width: 30, height: 30, margin: 5 }}
+        
+      />
+      </TouchableOpacity>
+    );
+  }
+}
+menuHandler=()=>{
+ 
 
+<MenuProvider style={{ flexDirection: "column", padding: 30 }}>
+        <Menu onSelect={value => alert(`You Clicked : ${value}`)}>
 
+          <MenuTrigger  >
+          <Text style={styles.headerText}>DropDown Menu</Text>
+          </MenuTrigger  >
+
+          <MenuOptions>
+            <MenuOption value={"Login"}>
+              <Text style={styles.menuContent}>Login</Text>
+            </MenuOption>
+            <MenuOption value={"Register"}>
+              <Text style={styles.menuContent}>Register</Text>
+            </MenuOption>
+            <MenuOption value={"Download"}>
+              <Text style={styles.menuContent}>Download</Text>
+            </MenuOption>
+            <MenuOption value={"Logout"}>
+              <Text style={styles.menuContent}>Logout</Text>
+            </MenuOption>
+            <MenuOption value={3} disabled={true}>
+              <Text style={styles.menuContent}>Disabled Menu</Text>
+            </MenuOption>
+          </MenuOptions>
+
+        </Menu>
+      </MenuProvider>
+
+}
 export default class Events extends React.Component {
 
   state = {
@@ -53,6 +101,14 @@ export default class Events extends React.Component {
         this.setState({ events: snapshot.val() });
       });
 };
+
+static navigationOptions = ({ navigation }) => ({
+
+  title: '2500 Valby',
+  headerRight: () => <SideMenu/>,
+ 
+  });
+
   render() {
     const { inputPostnr } = this.state;
     const { events } = this.state;
