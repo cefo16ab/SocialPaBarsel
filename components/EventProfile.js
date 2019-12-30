@@ -61,6 +61,6 @@ export default class EventProfile extends React.Component {
         margin: 5
       },
       header: {
-        fontSize: 24,
+        fontSize: 20,
       },
     });

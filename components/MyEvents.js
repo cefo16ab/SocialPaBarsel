@@ -2,15 +2,59 @@ import * as React from 'react';
 import { Text, View, StyleSheet, Image, Button, TouchableOpacity, ScrollView } from 'react-native';
 import { DropdownMenu, MenuItem } from 'react-bootstrap-dropdown-menu';
 import firebase from 'firebase';
+
+class SideMenu extends React.Component{
+  render() {
+    return (
+      <TouchableOpacity onPress={this.menuHandler}>
+      <Image
+        source={require('../assets/hamburger.jpg')}
+        style={{ width: 30, height: 30, margin: 5 }}
+        
+      />
+      </TouchableOpacity>
+    );
+  }
+}
+menuHandler=()=>{
+ 
+
+<MenuProvider style={{ flexDirection: "column", padding: 30 }}>
+        <Menu onSelect={value => alert(`You Clicked : ${value}`)}>
+
+          <MenuTrigger  >
+          <Text style={styles.headerText}>DropDown Menu</Text>
+          </MenuTrigger  >
+
+          <MenuOptions>
+            <MenuOption value={"Login"}>
+              <Text style={styles.menuContent}>Login</Text>
+            </MenuOption>
+            <MenuOption value={"Register"}>
+              <Text style={styles.menuContent}>Register</Text>
+            </MenuOption>
+            <MenuOption value={"Download"}>
+              <Text style={styles.menuContent}>Download</Text>
+            </MenuOption>
+            <MenuOption value={"Logout"}>
+              <Text style={styles.menuContent}>Logout</Text>
+            </MenuOption>
+            <MenuOption value={3} disabled={true}>
+              <Text style={styles.menuContent}>Disabled Menu</Text>
+            </MenuOption>
+          </MenuOptions>
+
+        </Menu>
+      </MenuProvider>
+
+}
+
 export default class MyEvents extends React.Component {
   //handler der håndtere navigation
   handleGoToCreate = () => {
     this.props.navigation.navigate('CreateEvent');
   };
-  alertHandler=()=>{
-    //funktion der laver simpel alert
-    alert('Du er frameldt eventet');
-  }
+ 
  
  
 
@@ -25,7 +69,9 @@ export default class MyEvents extends React.Component {
   static navigationOptions =
   {
     title: 'Mine events',
+    headerRight: () => <SideMenu/>,
   };
+ 
   
   render() {
     const { user } = firebase.auth();
